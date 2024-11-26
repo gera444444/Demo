@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>заявки</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>Номер</th>
+            <th>дата</th>
+            <th>модель</th>
+            <th>вид</th>
+            <th>клиент</th>
+            <th>описание</th>
+            <th>статус</th>
+            <th>номер телефона</th>
+        </tr>
+    </table>
+    <script>
+        let table = document.querySelector("table");
+        GetOrders();
+
+        async function GetOrders()
+        {
+            let response = await fetch("http://127.0.0.1:8000/", {method:"GET"});
+            let orders = await response.json();
+
+            orders.forEach(o => {
+                let tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td>${o.number}</td>
+                    <td>${o.startdate}</td>
+                    <td>${o.endDate}</td>
+                    <td>${o.client}</td>
+                    <td>${o.model}</td>
+                    <td>${o.view}</td>
+                    <td>${o.description}</td>
+                    <td>${o.phone}</td>
+                    <td>${o.status}</td>`;
+
+                table.append(tr);     
+            });
+        }
+    </script>
+</body>
+</html>
